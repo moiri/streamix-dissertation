@@ -1,0 +1,32 @@
+\setlength{\grammarindent}{10em} % increase separation between LHS/RHS 
+\begin{grammar}
+    <net\_assign> $\Rightarrow$ <net\_name> \lit{=} <net>
+    % \alt <wrap\_call>
+
+    <net> $\Rightarrow$ <abstract\_net>
+    \alt <composed\_net>
+
+    <abstract\_net> $\Rightarrow$ <box\_name>
+    \alt <net\_name>
+    \alt <wrap\_name>
+    % \alt <wrap\_call>
+
+    <composed\_net> $\Rightarrow$ <net> \lit{.} <net>
+    \alt <net> \lit{:} <net>
+    \alt <net> \lit{|} <net>
+    \alt <net> \lit{!} <net>
+    \alt \lit{(} <net> \lit{)}
+    \alt \lit{tt} \lit{[} <time\_decl> \lit{]} \lit{(} <net> \lit{)}
+    \alt \lit{tb} \lit{[} <time\_decl> \lit{]} \lit{(} <net> \lit{)}
+
+    <time\_decl> $\Rightarrow$ \Regex{[} <time> \lit{s} \Regex{]} \Regex{[} <time> \lit{ms} \Regex{]} \Regex{[} <time> \lit{us} \Regex{]} \Regex{[} <time> \lit{ns} \Regex{]}
+
+    <box\_name> $\Rightarrow$ identifier
+
+    <net\_name> $\Rightarrow$ identifier
+
+    <wrap\_name> $\Rightarrow$ identifier
+
+<time> $\Rightarrow$ $\mathbb{Z}^+$
+\end{grammar}
+

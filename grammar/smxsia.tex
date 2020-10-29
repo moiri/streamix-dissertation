@@ -1,0 +1,17 @@
+\setlength{\grammarindent}{10em} % increase separation between LHS/RHS 
+\begin{grammar}
+    <sia\_decl> $\Rightarrow$ \lit{sia} <sia\_name> \lit{\{} <state\_decl> \Regex{[} <state\_decl> \Regex{]*} \lit{\}}
+
+    <state\_decl> $\Rightarrow$ <state\_name> \lit{:} <transition> \Regex{[} \lit{|} <transition> \Regex{]*}
+
+    <transition> $\Rightarrow$ <action\_name> <action\_mode> \lit{.} <state\_name>
+
+    <action\_mode> $\Rightarrow$ \lit{?} \alt \lit{!} \alt \lit{;}
+
+    <sia\_name> $\Rightarrow$ identifier
+
+    <state\_name> $\Rightarrow$ identifier
+
+    <action\_name> $\Rightarrow$ identifier
+\end{grammar}
+

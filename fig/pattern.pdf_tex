@@ -1,0 +1,64 @@
+%% Creator: Inkscape inkscape 0.48.5, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'pattern.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{289.39997559bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.79667496)%
+    \put(0,0){\includegraphics[width=\unitlength]{pattern.pdf}}%
+    \put(0.13949656,0.15167157){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{blocking write}}}%
+    \put(0.6674855,0.1527136){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{blocking read}}}%
+    \put(0.14131875,0.01035008){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{single buffer}}}%
+    \put(0.66712106,0.00552733){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{FIFO buffer}}}%
+    \put(0.14127016,0.07912047){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{overwrite}}}%
+    \put(0.6674855,0.07912047){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{pull}}}%
+    \put(0.00276434,0.72483756){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{a)}}}%
+    \put(0.00276434,0.43339098){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{c)}}}%
+    \put(0.00276434,0.57911429){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{b)}}}%
+    \put(0.00276434,0.28766753){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{d)}}}%
+  \end{picture}%
+\endgroup%

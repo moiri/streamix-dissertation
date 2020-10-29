@@ -1,0 +1,216 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Amendments to the Dissertation\\``Analysis and Coordination of Mixed-criticality Cyber-physical Systems''} % Title
+
+\author{Simon \textsc{Maurer}} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+% If you wish to include an abstract, uncomment the lines below
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+This document provides written guidance of how and where I have implemented the required amendments.
+This is done in Section~\ref{amendments}.
+Further, in Section~\ref{changelog} I provide a complete list of implemented changes where also issues are covered that were briefly touched during the Viva but not mentioned in the list of amendments.
+
+\section{Required and Suggested Amendments}
+\label{amendments}
+In this section I refer to the official list of amendments that were provided to me in written form.
+
+\subsection{Clear Statement of the Thesis}
+I changed the name of Section 1.1 from ``Research Questions'' to ``Thesis and Research Questions'' and added the thesis:
+\emph{It is possible to bridge the gap between stream processing and Labelled Transition Systems (LTSs) for complex components.}
+
+Further I introduced a new paragraph in the introduction hinting at the thesis (last paragraph on page 2).
+
+Finally, I extended the section ``Contributions'' with the image I showed during the viva and a description of the image.
+
+\subsection{Abstract}
+In the abstract I now put the focus on bridging the gap between LTS and stream processing to highlight the novelty of the work.
+Further, I highlight that the work spans from theory of a coordination model to the instantiation of the model as a coordination language.
+
+\subsection{Claims to Novelty}
+First, I extended the list in Section 1.2 of the dissertation to cover all major contributions and novelties of my work.
+Second, when talking about PNSCs and SIAs I put more focus on SIAs, which is the novelty of the model and on the extensions described in Chapter 4.
+Third, I explicitly point out the novelty of a concept when it is first introduced (e.g. semi-state message semantics).
+
+\subsection{Typographical Slips}
+I fixed spelling mistakes, consistency problems (hyphen, no hyphen), punctuation issues, subscripts of equations, and captions of figures.
+
+\subsection{Lengthy Formal Definitions}
+In order to make the formulas in Chapter 6 of the dissertation more accessible I added a brief informal description to each line.
+Further I added a short description of the main features of Figures 6.8, 6.9, 6.10, and 6.14.
+
+\subsection{Brief Description of Other Case Studies}
+In Chapter 7 of the dissertation, I added a list of all simple examples that are available on GitHub and added a brief description for each of them.
+I also provided a short documentation on how to compile and run the examples.
+
+%----------------------------------------------------------------------------------------
+%	SECTION 2
+%----------------------------------------------------------------------------------------
+
+\section{Changelog}
+\label{changelog}
+This sections provides an extensive changelog, listing the changes made to the dissertation after the examination of the 11th of January 2018.
+
+\begin{itemize}
+    \item All Chapters
+        \begin{itemize}
+            \item Fix typos, presentation, and figure captions throughout the dissertation
+            \item Improve the readability by addressing smaller issues that surfaced during the examination
+        \end{itemize}
+    \item Abstract
+        \begin{itemize}
+            \item Change the focus to better address contributions and innovations
+        \end{itemize}
+    \item Chapter 1
+        \begin{itemize}
+            \item Put the focus on SIAs rather than PNSCs
+        \end{itemize}
+    \item Section 1.1
+        \begin{itemize}
+            \item Change the title to ``Thesis and Research Questions''
+            \item Add a clear statement of the thesis
+        \end{itemize}
+    \item Section 1.2
+        \begin{itemize}
+            \item Add the figure from examination slides and a description of the figure
+            \item Extend the list of contributions and made claim for new concepts
+        \end{itemize}
+    \item Subsection 1.2.1
+        \begin{itemize}
+            \item Chang the title to "Publications"
+        \end{itemize}
+    \item Section 2.2
+        \begin{itemize}
+            \item Hint at differences between Interface Automata and Synchronous Interface Automata
+        \end{itemize}
+    \item Section 2.3
+        \begin{itemize}
+            \item Move the deadlock and lonely blocker definitions from Chapter 5 to Section 2.3
+            \item Add a crossroad example of a lonely blocker
+        \end{itemize}
+    \item Chapter 3
+        \begin{itemize}
+            \item Change the title to ``PNSC with SIA - An Analysable Event-based Component Model''
+            \item Change the section structure and order to first group formal definitions and then provide examples
+        \end{itemize}
+    \item Section 3.1
+        \begin{itemize}
+            \item Fix the formula subscripts in Definition 3.1
+            \item Change non-conflicting port condition to hold for n processes
+            \item Change ``abstract process'' to ``composed process''
+            \item Add an example of a composed process
+        \end{itemize}
+    \item Section 3.2
+        \begin{itemize}
+            \item Make the relation between a SIA and a PNSC process more explicit in definition 3.3
+            \item Make clear that multiple state transitions can use the same action
+            \item Mention that hidden actions do not require determinism
+        \end{itemize}
+    \item Subsection 3.2.3
+        \begin{itemize}
+            \item Make the relation between SIAs and PNSC processes more verbose
+        \end{itemize}
+    \item Section 4.1
+        \begin{itemize}
+            \item Improve wording to make the difference between different coupling mechanisms clear
+        \end{itemize}
+    \item Subsection 4.1.2
+        \begin{itemize}
+            \item Improve wording to make clear that decoupling inside a process is undesirable
+            \item Fix the states of Figure 4.3 (need to be pairs)
+            \item Fix the caption of Figure 4.3 (was the same as Fig 4.1)
+            \item Add a forward reference to message types (loss and duplication of messages is tolerable in some cases)
+            \item Remove the name ``smart'' FIFO
+        \end{itemize}
+    \item Subsection 4.2.2
+        \begin{itemize}
+            \item Improve the definition of the PBRT protocol
+        \end{itemize}
+    \item Subsection 4.4.1
+        \begin{itemize}
+            \item Highlight the process of higher criticality in Figure 4.13
+        \end{itemize}
+    \item Section 4.6
+        \begin{itemize}
+            \item Discuss the possible number of criticality levels
+        \end{itemize}
+    \item Chapter 5
+        \begin{itemize}
+            \item Improve the section structure throughout this chapter:
+                \begin{itemize}
+                    \item Discuss permanent blocking analysis on 2 processes then extend to n processes
+                    \item Discuss deadlock analysis on 2 processes then extend to n processes
+                    \item Describe specific aspects of the algorithms
+                \end{itemize}
+            \item Include more explicit talk about exponential growth of state space
+        \end{itemize}
+    \item Chapter 6
+        \begin{itemize}
+            \item Add informal descriptions of the lengthy formulas
+        \end{itemize}
+    \item Subsubsection 6.2.2.1
+        \begin{itemize}
+            \item Fix the FIFO length definition
+        \end{itemize}
+    \item Subsection 6.3.1
+        \begin{itemize}
+            \item Explain the choice of the names ``left'' and ``right'' for port collections
+        \end{itemize}
+    \item Chapter 7
+        \begin{itemize}
+            \item Add a list of examples that are provided on GitHub
+            \item Make function names consistent with code on GitHub
+            \item Change ``model checker'' to ``permanent blocking analysis''
+        \end{itemize}
+\end{itemize}
+
+\end{document}

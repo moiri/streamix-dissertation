@@ -1,0 +1,117 @@
+% -*-mode: Latex-*-
+% !TEX root = thesis.tex
+% paper: ...
+% authors: simon maurer
+%
+% file: conclusion.tex
+% contents: Conclusion of the thesis
+% Sccs-Id: %W% %G%
+\chapter{Conclusion and Outlook}
+\label{chap_conclusion}
+In this chapter I conclude my dissertation by providing a summary of the accomplishments, discussing the result, and giving an outlook for future research to improve and refine aspects of the work presented in this dissertation.
+
+%==============================================================================
+\section{Summary of the Dissertation}
+\label{sect_conclusion_summary}
+In my work I introduced the coordination model \emph{\gls{pnsc}} with the aim to describe concurrent, time-critical \glspl{cps}.
+The coordination model provides a separation between the concerns of computation and coordination (\ie communication and synchronisation).
+This is achieved by a component-based design where computational components are abstracted by an interface description.
+I introduced \glspl{sia}, an automata-based interface language that allows to clearly define the communication protocol of interacting components and incrementally compose interfaces of components.
+The interaction of components uses a blocking semantics that allows to model streaming networks where complex components, \ie components with persistent state and internal synchronisation points, interact over synchronous communication channels.
+An extension of the model supports an event-triggered as well as a time-triggered execution strategy and allows interaction between components independent of the execution strategy.
+A communication decoupling mechanism allows to control the level of interference and thus, provides support for mixed-criticality systems.
+Further, the extended model provides rate-control mechanisms for communication and computation to allow the specification of timing requirements of an application.
+Computational components are oblivious of the coordination that is excerpt on them by the model, hence, the domain expert who implements the computation component is not required to know the context in which the component will be used.
+To statically check for freedom of permanent blocking in an assembly of interacting computational components, I introduced an analytic method that uses the \gls{sia} interface description of a composed system to identify states in the system that can cause permanent blocking.
+
+As an instance of the coordination model \gls{pnsc} I designed the coordination language \gls*{smx}.
+\Gls*{smx} is an exogenous coordination language that allows to construct networks of concurrent processes in a structured and hierarchical way.
+It accomplishes this by using network operators that allow to compose simple networks into more complex ones.
+The language uses the extended \gls{pnsc} model as a backbone to detect permanent blocking situations in a composed network.
+\Gls*{smx} supports all the features of the extended \gls{pnsc} model and adds syntax and structure to it.
+I implemented a prototype of a compiler, a \gls{rts} preprocessor, an \gls{rts}, and a \gls{sia} model checker to allow to build executable applications with the \gls*{smx} coordination language.
+
+%==============================================================================
+\section{Discussion of the Results}
+\label{sect_conclusion_discussion}
+The main priority of a coordination model is to separate the concerns of computation and coordination.
+The \gls{pnsc} model provides separation of concerns out of construction because of the process abstraction through \glspl{sia} and the communication decoupling in space:
+The behavioural description of a process is solely tied to the interaction protocol specified by its \gls{sia} which describes the temporal ordering of read and write operations of the process.
+Read and write operations are performed on ports without any knowledge of what is connected to the port.
+This is by itself not a novelty as the principle of using channels as coordination primitives, or glue-code, between components has been used in many instances
+(\eg~\cite{arbab2004, grelck2010}) and the concept of interface theories was initially proposed by de Alfaro and Henzinger~\cite{deAlfaro2001}.
+What is new however, is the combination of coordination primitives and an interface theory that allows to model a network of complex, reactive components with a blocking semantics of interacting processes that is fundamentally different from interface theories such as \glspl{ia}~\cite{deAlfaro2001a}.
+The permanent blocking analysis, introduced in this dissertation, is based on the blocking semantics of \glspl{sia} and is a novel approach to statically detect permanent blocking situations in a network of concurrent processes.
+The coordination model \gls{pnsc} offers \gls{cci} to selectively decouple communication in synchronisation and remove the blocking behaviour in order to prevent unwanted interference between subsystems.
+This mechanism, in conjunction with clock signals, is further used to create temporal firewalls that allow to create subnets of time-triggered processes, similar to Giotto~\cite{henzinger2001}.
+The novelty of the \gls{pnsc} model is the concept of selectively introducing temporal firewalls where required and allow interaction between time-triggered and event-triggered processes.
+\Glspl{pnsc} also allow to control the communication rate of single channels in order to increase the predictability of event-triggered communication.
+
+All the above mentioned coordination aspects are applied on processes without any requirement of changing the implementation of the processes.
+The \gls{rts} implementation for the coordination language \gls*{smx} achieves this by providing one singe macro function for read access and one single macro function for write access to channels connected to the process.
+The semantics of the read and write operations differs, depending on the coordination elements that are specified in the \gls*{smx} program.
+The macro functions allow to access the channels by name mapping and position mapping where the former tends to be more convenient for humans while the latter is more convenient for machines.
+% Arrangements of such heterogeneous networks are well suited to design mixed-criticality systems for multi-core architectures.
+
+The coordination language \gls*{smx} adds syntax to the \gls{pnsc} model and allows to structure a network of processes by using network operators.
+Structure in a program is provided by keeping information local.
+This means that when composing a network out of processes, the composition operation must hold as much information about the connections of the individual processes as possible.
+To gain expressiveness, \gls*{smx} provides multiple composition operators to describe different types of grouping, \eg parallel grouping where no connections are established between processes or serial grouping, \ie enforcing connections between processes.
+It is a difficult act to balance between providing convenience for the programmer and keeping the expressiveness of an operator:
+An example in \gls*{smx} is the \emph{bypassing serial composition} operator as defined in \Def{\ref{def_smx_so}}.
+It relaxes the more strict requirements of the \emph{locally enforcing serial composition} operator to allow the construction of more complex connections in a network (\eg bypassing processes).
+Such networks can also be built with the wrapper operator (see \Sect{\ref{sect_smx_network_assign}}) but at the cost of more writing work.
+However, the advantage of the wrapper is that it provides a better code structure as local connections are kept local.
+There is no definitive answer on which option is the better.
+% But in hindsight I question the benefit of convenience at the price of expressiveness.
+
+The \gls{pnsc} model (and therefore also \gls*{smx}) targets mixed-criticality \glspl{cps}.
+As a conclusion, let me summarize the main properties of the model that support this claim:
+\begin{description}
+    \item[Time-criticality of \glspl{cps}] A main requirement to give guarantees on timing requirements is predictability and analysability.
+        The \gls{pnsc} achieves the former through rate-control, \ie limiting the communication rate and imposing a fixed rate to achieve a time-triggered communication semantics.
+        The latter is achieved with interface abstraction of the \gls{sia} model that allows to check whether a \gls{pnsc} is free of permanent blocking situations.
+    \item[Mixed-criticality of \glspl{cps}] The \glspl{cci} provided by the extended \gls{pnsc} model allow to describe a system that simultaneously operates with event-triggered and time-triggered communication.
+        The corner stone of the \glspl{cci} is the selectively applicable mechanism to decouple communication in synchronisation that allows interaction between components with different criticality levels while preventing unwanted interference.
+    \item[The Reactive Nature of \glspl{cps}] The \gls{pnsc} model copes with the reactive nature of \gls{cps} by allowing complex processes with persistent state and internal synchronisation points.
+        \Glspl{sia} allow to preserve a detailed understanding of how processes interact and serve as instrument to detect permanent blocking situations in a network.
+        Further, the coordination language \gls*{smx} provides convenient network operators that allow to structure a network of processes in a concise way without removing the possibility to describe bidirectional communication between processes.
+        Because a \gls{pnsc} process can be of arbitrary complexity, the model is expected to be well suited to support legacy code.
+\end{description}
+
+\section{Outlook}
+\label{sect_conclusion_outlook}
+One of the achievements of my work is the interface model for blocking communication and based on it the permanent blocking analysis that finds potential permanent blocking states in a composed \gls{pnsc}.
+While the analysis performed on a composed \gls{pnsc} is of linear time complexity $\mathcal{O}(S+T)$, where $S$ denotes the number of states and $T$ the number of transitions in a composed system, the number of states $S$ and transitions $T$ grow exponentially with respect to the number of subsystems.
+This problem is known as the state space explosion of automata composition.
+There are existing approaches that help to alleviate this problem (\eg reducing internal actions) which needs to be addressed in future work.
+
+The \gls{sia} model, serving as a backbone of the permanent blocking analysis, was inspired by the work of de Alfaro and Henzinger on \glspl{ia}~\cite{deAlfaro2001a}.
+A property of \glspl{ia} is \emph{independent implementability} which means that if an interface is compatible with a system it can be refined separately and remains compatible.
+No refinement for \glspl{sia} was defined throughout this dissertation and it is left to future work to define refinement conditions suitable for \glspl{sia}.
+
+The software development of a time-critical system is still often tightly coupled to a specific hardware platform because a time-critical application must be guaranteed to produce a correct result before a specified deadline.
+As the execution time of an application is heavily influenced by the hardware platform the application is running on, such guarantees are usually given by extensive testing of the software application in conjunction with its hardware platform.
+This leads to the problem that whenever something has to be changed (in hardware or software) these extensive tests have to be performed again.
+The aim is to loosen the tight coupling between the software application and the hardware platform of a time-critical system in order to facilitate the development and maintenance process of cyber-physical systems.
+This would alleviate the necessity of expensive, holistic testing and allow the efficient redeployment of developed applications on different platforms.
+
+A coordination model, such as the one presented in this dissertation, can help to get closer to this goal with separation of concerns:
+Computational components can be checked for correctness independently and the coordination model allows to assemble the components into a network by keeping a tight control on the interactions of the components.
+The time-triggered communication semantics of a \gls{pnsc} allows to design a predictable system where each time-triggered process can be analysed individually.
+In the current model it must be guaranteed that the \gls{wcet} of the process implementation respects the specified timing constraints of the model.
+As future work it would be interesting to extend \glspl{sia} with a timed automata model to describe the timing behaviour of a process (similar to the \gls{bip}~\cite{abdellatif2010} approach mentioned in \Sect{\ref{sect_related_coord_bip}}).
+
+Given that the \gls{pnsc} model allows to describe systems that operate simultaneously with time-triggered and event-triggered components, timing specifications solely based on rate-control are not sufficient to fully describe time-critical systems.
+The specification of latency must also be supported for an event-triggered subnetwork.
+This is an aspect that was not covered in this dissertation.
+An interesting approach related to this problem was introduced with Ptides~\cite{derler2008}.
+It remains to be seen whether a similar approach can be adapted to work with complex processes where the interaction of a process with its environment is described by a (timed) automata model.
+Further, in parallel to the work presented in this dissertation we (Kirner and Maurer) published a paper that discusses the problem of specifying timing requirements in streaming networks and identified some pitfalls when it comes to latency specifications in streaming networks~\cite{kirner2015}.
+One challenge is to split global, system-wide timing requirements into meaningful chunks that can be attributed to computational components.
+This is a problem that has, to my knowledge, not yet been addressed.
+
+Last but not least, I give an outlook on research for the coordination language \gls*{smx} and the toolset I built around it.
+For my thesis it served as a proof of concept to show the usability of the \gls{pnsc} and \gls{sia} model.
+However, to exploit all the features offered by the language the \gls{rts} must support a mixed-criticality scheduler for multi-core architectures.
+This is a huge research field (Burns and Davis provide a review on the topic~\cite{burns2016}) and requires a thorough analysis.

@@ -1,0 +1,22 @@
+\setlength{\grammarindent}{10em} % increase separation between LHS/RHS 
+\begin{grammar}
+    <box\_assign> $\Rightarrow$ <box\_name> \lit{=} <box\_decl>
+
+    <box\_decl> $\Rightarrow$ \Regex{[} \lit{static} \Regex{]} \Regex{[} \lit{pure} \Regex{]} \lit{box} <impl\_name> \lit{(} <box\_port\_list> \lit{)}
+
+    <box\_port\_list> $\Rightarrow$ <box\_port\_decl> \Regex{[} \lit{,} <box\_port\_decl> \Regex{]*}
+
+    <box\_port\_decl> $\Rightarrow$ \Regex{[} \lit{decoupled} \Regex{]} \Regex{[} <port\_collection> \Regex{]} <port\_mode> \newline
+    <port\_name> \Regex{[} \lit{(} <port\_name\_alt> \lit{)} \Regex{]} \Regex{[} \lit{[} <buffer\_len> \lit{]} \Regex{]}
+
+    <port\_mode> $\Rightarrow$ \lit{in}
+    \alt \lit{out}
+
+    <buffer\_len> $\Rightarrow$ $\mathbb{Z}^+$
+
+    <impl\_name> $\Rightarrow$ identifier
+
+    <port\_name> $\Rightarrow$ identifier
+
+    <port\_name\_alt> $\Rightarrow$ identifier
+\end{grammar}

@@ -1,0 +1,251 @@
+% -*-mode: Latex-*-
+% !TEX root = thesis.tex
+% paper: ...
+% authors: simon maurer
+%
+% file: related.tex
+% contents: related work of the thesis
+% Sccs-Id: %W% %G%
+\chapter{Related Work}
+\label{chap_related}
+
+In this chapter I discuss existing work which I used as an inspiration for my thesis or is related to some aspects of it.
+\Sect{\ref{sect_related_interface}} discusses the topic of interface theory and related models that served as an inspiration for the model of \Chap{\ref{chap_ecm}}.
+\Sect{\ref{sect_related_coord}} relates the coordination aspects of \gls*{smx} and its underlying model, discussed in \Chap{\ref{chap_ecm}}, \Chap{\ref{chap_tcm}}, and \Chap{\ref{chap_smx}}, to existing coordination models and languages.
+Finally, \Sect{\ref{sect_related_dl}} relates the permanent blocking analysis, described in \Sect{\ref{chap_block}}, to existing work in this area and I discuss specific properties of languages and models, mentioned in previous section, with respect to permanent blocking.
+
+%==============================================================================
+\section{Interface Theory}
+\label{sect_related_interface}
+For complex component-based system designs, compatibility checks need to consider the behaviour of components and their reaction to the environment they are placed in.
+This problem was addressed by Lynch and Tuttle when they introduced \glspl{ioa}~\cite{lynch1987}.
+They present a model that allows to describe the behaviour of an algorithm and to compose the descriptions hierarchically.
+The description is done in the form of an automaton that captures the order of input, output, and internal actions of an algorithm.
+The concept was later adopted by de Alfaro and Henzinger~\cite{deAlfaro2001a} for their work on \glspl{ia}, a model to describe the interface of components.
+While \glspl{ia} are syntactically similar to \glspl{ioa}, the composition operation is defined differently.
+This is due to the conceptual difference between the two models with respect to the assumptions made on the environment.
+An \gls{ioa} has to accept any input of the environment, independent of the state it is in.
+This lies in contrast to an \gls{ia} which assumes a helpful environment.
+This means that \glspl{ioa} must be able to cope with any environment, while, in the case of \glspl{ia}, the compatibility check returns a valid result if there is at least one environment that is compatible.
+\Glspl{ioa} are called input-enabled or pessimistic, while \glspl{ia} are called optimistic.
+As a consequence, the input operations of \glspl{ia} become blocking.
+\glspl{ia} and \glspl{ioa} have been combined by Larsen \etal in their work on \glspl{ioia}~\cite{larsen2006}.
+By formally separating \emph{assumptions} and \emph{specifications} of a component, the authors eliminate the blocking inputs of \glspl{ia}.
+The separation is achieved by describing each aspect with a separate automaton.
+The work was further extended in~\cite{larsen2007} where they introduce \glspl{mioa} in order to distinguish between \emph{must} and \emph{may} modalities of transitions.
+The modalities are used to indicate whether an instantiation of a \gls{mioa} must support the transitions of the generic system description or may be omitted.
+
+\Glspl{sia}, introduced in this dissertation, are syntactical similar to \glspl{ia}.
+There is, however, a fundamental difference in the blocking semantics of output actions.
+Whenever an output action is produced by an \gls{ia} it must be accepted by the environment and cannot be blocked by an action that is controlled by another component (output or internal action).
+A state where an output action cannot be served without blocking is called an error state:
+The error state of a composed \gls{ia} $P \otimes Q$ is a state where $P$ produces an output that cannot be served by an input of $Q$ or where $Q$ produces an output that cannot be served by an input of $P$.
+This semantics allows to guarantee that if a composed \gls{ia} has no non-autonomously reachable error states, autonomous actions of one component are always served by the other.
+\Glspl{ia} are, however, a simplification of the synchronous communication semantics and the model can therefore not be used to detect permanent blocking states.
+\Glspl{sia}, on the other hand, have blocking input and output actions in order to model synchronous communication and therefore allow to check for the possibility of being blocked in a blocking state indefinitely.
+Simply put, \glspl{ioa} and \glspl{ioia} are neither blocking on inputs nor outputs, \glspl{ia} are only blocking on inputs, and \glspl{sia} are blocking on inputs and outputs.
+
+Hennicker and Knapp~\cite{hennicker2015} developed a theory based on both, \glspl{ia} and \glspl{mioa} where they not only focus on a pairwise component analysis but consider the interoperability of an assembly of components.
+They propose to check that the assumption of each component on its environment (the rest of the network) is met, \ie given an assembly of components $A = \{ C_1, \dots, C_n \}$ and an operation $\bigotimes\langle A \rangle$ denoting the n-ary composition of the assembly of components, they compute $\bigotimes\langle A \setminus C_i \rangle \otimes C_i$ for each component $C_i$.
+% Our analysis is more efficient than their proposed one because by propagating additional information (the state tuple $\langle s_1, \dots, s_n \rangle$ and the set of subsystem identifiers $\mathit{Sys}(e)$) along the incremental composition it is sufficient to perform the analysis on the composed system.
+
+%==============================================================================
+\section{Mixed-criticality Models}
+\label{sect_related_mix}
+In \Chap{\ref{chap_tcm}} I described an extension of the \gls{pnsc} model to allow time-triggered processes to coexist and interact with event-triggered processes.
+To my knowledge the \gls{pnsc} model is the first model to incorporate time-triggered and event-triggered semantics where interaction between the two is possible with \glspl{cci}.
+However, the co-existence of time-triggered and event-triggered communication paradigms on the same system has already been discussed in the past:
+Pop \etal proposed to separate communication into two phases and statically pass them as input to the scheduler~\cite{pop2002}.
+The work of Ferreira \etal on FTT-CAN is similar to this concept~\cite{ferreira2002}.
+Steiner proposed a scheduler for mixed-critical CPSs using the concept of \emph{schedule porosity}~\cite{steiner2011}.
+Obermaisser proposed an implementation of the Controller Area Network (CAN) bus, which is event-driven, on a system based on the time-triggered communication principle using a tunnelling approach~\cite{obermaisser2006}.
+% MixCPS is an architecture proposed by Yao \etal that incorporates a scheduler for both time-triggered and event-triggered tasks.
+% They focus on the optimisation of the scheduler by introduto optimize 
+In terms of mixed-criticality systems, Burns \etal provide a review document that is constantly updated and maintained~\cite{burns2016}.
+
+% Recently, Lee \etal argued that mixed-criticality interfaces~\cite{lee2016} 
+Tan \etal made the argument that given that the human society is event-driven, future \glspl{cps} should be event-triggered~\cite{tan2008}.
+Given that today most critical applications employ the \gls{tta} because of its predictability and fault-tolerance it is unlikely that the time-triggered model will be replaced completely.
+But because of efficiency reasons and because event-triggered models represent the physical world better the interaction of the two systems is becoming more frequent~\cite{deDinechin2013}.
+% Especially with emerging many-core architectures where both, a shared memory and \gls{noc} infrastructure is used to communicate between cores (\eg the Kalray MPPA\textsuperscript{\textregistered}-256 integrated many-core architecture~\cite{deDinechin2013}).
+
+%==============================================================================
+\section{Coordination Models and Languages}
+\label{sect_related_coord}
+Since the publication of the first coordination language \gls*{linda}~\cite{gelernter1992}, a multitude of coordination languages have been proposed, based on the same general principle of tuple space~\cite{rossi2001, omicini2011}.
+In their landmark survey on coordination languages~\cite{papadopoulos1998} Papadopoulos and Arbab distinguish between data-driven and control-driven coordination languages where languages based on the tuple space model fall into the former classification.
+\Gls*{smx} is a control-driven coordination language because the underlying \gls{pnsc} model is component-based and corresponds to the black-box approach where the component itself is unaware of being coordinated (such a model is also called an exogenous coordination model~\cite{arbab2006}).
+In the following I will describe several coordination models and languages in more detail and compare them to \gls*{smx} and its underlying model \gls{pnsc}.
+
+% Other coordination languages (\eg Manifold~\cite{arbab1996a}) have been introduced where there is a clear separation between coordination and computation and they have been classified as control-driven coordination languages in this survey.
+
+% Cabri \etal present agent role-based approaches for coordination and collaboration in~\cite{Cabri2004}.
+% The three coordination models Reo, ARC, and PBRD are compared in~\cite{Talcott2011}.
+
+% The coordination language Reo~\cite{arbab2004} is based on an exogenous coordination model and has its main focus on the synchronization aspects of coordination.
+% Reo is a powerful channel calculus that allows complex interaction semantics between computational components.
+
+%------------------------------------------------------------------------------
+\subsection{S-Net}
+\label{sect_related_coord_snet}
+A first approach of coordinating streaming applications was introduced with \gls*{streamit}~\cite{thies2002}, a language that allows to create a loosely structured streaming network by interconnecting computational components, called filters, with network constructors such as split-join, feedback, or simple one-to-one streams.
+The fully fledged coordination language \gls*{snet}~\cite{grelck2010} is also based on streaming networks but unlike \gls*{streamit}, \gls*{snet} is exogenous and achieves a tighter structuring with network operators.
+\Gls*{snet} uses binary operators to construct a streaming network from functional components, interlinked by \gls{fifo}-channels.
+\Gls*{snet} aims at exploiting the inherent pipelined network structure of streaming applications to run components in parallel.
+Feedbacks are avoided by replicating components dynamically and building a pipeline with the replicas.
+As a consequence, \gls*{snet} relies on the requirement that all components are pure, \ie purely functional and therefore without persistent state, and of type \gls{siso}.
+\Gls*{snet} features an extensive type system which allows to build arbitrary networks through concepts like flow inheritance and sub-typing.
+The concept of \gls*{snet} to use binary operators to construct a network out of pure \gls{siso} components is very appealing because it allows to describe networks in a very concise and structured way and imposes a fixed information flow from the left to the right.
+However, the complex type system of \gls*{snet} makes it exceedingly hard to understand how \glspl*{msg} are routed in an \gls*{snet} network, which contradicts the conciseness of the network operators to some extent.
+Also, the requirement of only accepting pure components makes \gls*{snet} not very suitable for applications with legacy code because it is hard to transform components with persistent state into a system of stateless components.
+
+\Gls*{smx} is similar to \gls*{snet} with respect to their blocking semantics as they both are similar to the model of \gls{kpn}~\cite{kahn1974}.
+Further, \Gls*{smx} borrows the concept of using binary operators to describe a network in a structured way from \gls*{snet}.
+The underlying model of the two coordination languages, however, differs largely because \gls*{snet} targets transformational systems and aims at exploiting parallel architectures by dynamically proliferating components while \gls*{smx} targets \glspl{cps} where predictability and analysability is key.
+One major difference is that \gls*{smx} allows components with persistent state, internal synchronisation points, and multiple inputs and multiple outputs while \gls*{smx} restricts components to be pure and of type \gls{siso}.
+Consequently, the semantics of the network operators are different in both languages:
+The network operators of \gls*{snet} are specifically designed to allow the programmer to explicitly control how parts of the application are executed concurrently on a multicore architecture.
+While the operators in \gls*{smx} also provide information on whether there is a direct dependency between operands or not, they serve more the purpose of letting a programmer compose reactive networks in a structured manner.
+By doing this, some of the expressiveness of the language is lost because dependencies are not immediately observable through the operators.
+What is gained, however, is a convenient and concise way of describing reactive systems.
+Also, \gls*{smx} does not rely on type routing which preserves observable connectivity information at the level of the operators and, thus, provides more local network information than \gls*{snet} does.
+In order to preserve analysability of the system, the underlying \gls{pnsc} model provides an interface language (\glspl{sia}) to describe the interaction behaviour of components with their environment.
+
+%------------------------------------------------------------------------------
+\subsection{BIP}
+\label{sect_related_coord_bip}
+The coordination language \gls{bip}~\cite{basu2006, bliudze2008} is a language that allows to compose and coordinate concurrent components.
+A three-layered approach allows a clear separation between computation and coordination.
+The behaviour layer is an automata-based model that describes the behaviour of a component and the interaction of the component with its interface.
+The interaction layer describes connections between the interfaces of components.
+The priority layer is used to impose scheduler constraints.
+Connections in \gls{bip} are stateless, as are the basic connections in the \gls{pnsc} model presented in this dissertation.
+By extending the \gls{pnsc} model, however, a library of modular, potentially stateful channels is provided (\eg \gls{fifo} channels).
+Further, connections in the \gls{pnsc} model are one to one while in \gls{bip} multiple ports can form a connection.
+The interaction layer specifies the level of synchronisation (\eg rendez-vous, broadcast).
+The interaction model of \gls{bip} does not support a decoupling mechanism as described in \Sect{\ref{sect_cci_decoupling_sync}}.
+In \gls{bip}, the composition of components is achieved through user-defined connectors where port connections are explicitly listed.
+In \gls*{smx} this is avoided with the help of network operators.
+
+An interesting application of \gls{bip} is described in~\cite{abdellatif2010} where the behaviour layer is extended by timed automata.
+This extended \gls{bip} model is then used to first, describe a platform independent timing behaviour of a component and second, to represent the physical timing behaviour of a hardware platform.
+Using a composition operation it can then be checked whether the timing behaviour of the application is compatible with the timing behaviour of the hardware platform.
+Given the similarity between the two models, it should be possible to apply this method on the \gls{pnsc} model.
+
+%------------------------------------------------------------------------------
+\subsection{Giotto}
+\label{sect_related_coord_giotto}
+% Giotto~\cite{henzinger2001} is based on a time-triggered paradigm and targets applications with periodic behaviour, while the presented coordination model supports mixed timing semantics.
+Giotto~\cite{henzinger2001} is a coordination language that allows the implementation of concurrent real-time tasks while providing \emph{composable I/O behaviour}.
+The aim is to provide an abstraction for real-time systems to make real-time software less dependent on hardware and to control I/O jitter.
+Giotto is based on the \gls{let} model where tasks are executed within a statically allocated time slot.
+At the beginning of the \gls{let} inputs are made available and outputs are released at the end of the \gls{let} of a task.
+The time instants of input and output operations are independent of the execution time as it is not specified when and where tasks are executed.
+% It is the job of the scheduler to execute the tasks in their allotted LET in a feasible or optimal way.
+% Other coordination languages based on Giotto, such as TDL~\cite{templ2009} and HTL~\cite{gosal2006}, add asynchronous activities and hierarchical composition to the model.
+
+The extended \gls{pnsc} model achieves the \gls{let} behaviour by replacing input and output channels of processes by temporal firewalls (see \Sect{\ref{sect_tcm_time_tt}}).
+The coordination language \gls*{smx} allows to instantiate such temporal firewalls with the \texttt{tt} operator on a single net or a composed net (see \Sect{\ref{sect_smx_network_time}}).
+
+% \subsection{Shortcomings/Discussions}
+%~\cite{Kirsch2006, Wellings2010}
+
+%------------------------------------------------------------------------------
+\subsection{Ptolemy and Ptides}
+\label{sect_related_coord_ptolemy}
+The focus of the Ptolemy~\cite{eker2003} project lies on providing a unified modelling language that allows to integrate and compose heterogeneous real-time systems.
+Ptolemy is based on an actor-oriented design~\cite{lee2003} where actors are executed concurrently and communicate with other actors by sending \glspl*{msg} through ports (not to be confused with the actor model~\cite{agha1985}).
+It allows to model heterogeneous systems by assigning different predefined model semantics, called \glspl{moc}, to assemblies of actors, called platforms.
+% The composition of these platforms must allow communication between the platforms without interfering with their properties.
+% The Ptolemy language is an endogenous coordination language as coordination happens from within platforms.
+Ptolemy supports many different \glspl{moc}, \ia \gls{kpn}~\cite{kahn1974}, the \gls{let} model of Giotto~\cite{henzinger2001}, \gls{sdf}~\cite{lee1987} (\eg the underlying model of \gls*{streamit}~\cite{thies2002}), or the discrete-event model~\cite{lee1999}.
+A detailed description of Ptolemy and an extensive list of available \glspl{moc} is provided in~\cite{ptolemaeus2014}.
+
+In contrast to the Ptolemy project, the presented approach in this dissertation is not an assembly of submodels but one single model where a modular composition operation applied on processes preserves the model properties, independent of the triggering semantics or communication coupling of the individual processes.
+It is clear that the here presented model is not as diverse as the Ptolemy project but it provides well defined interfaces between interacting subsystems with different triggering semantics and provides flexible control over communication coupling which allows the design of mixed-criticality systems.
+Further, in contrast to the underlying model of Ptolemy where one actor models a simple task, the \gls{pnsc} allows to model complex tasks with multiple synchronisation points within.
+
+One \gls{moc} of Ptolemy that is particularly interesting and needs to be considered for future work on the \gls{pnsc} model is Ptides~\cite{derler2008}.
+Ptides extends the discrete-event \gls{moc} and allows to describe the timing behaviour in a network of event-triggered actors.
+This is achieved by distinguishing between physical time and model time where the former is tied to sensors and actuators, \ie components that interact with the physical world, and the progression of the latter is specified within the model.
+It is a promising approach to loosen the coupling between the software development of time-critical systems and the hardware platform where the system is executed.
+
+
+% While the Ptolemy language is not an exogenous coordination language as no clear separation between computation and coordination is achieved 
+
+% A stream-based coordination language with a similar focus is Ptides~\cite{Derler2008}.
+% Ptides was designed to simplify the design and to facilitate the maintenance of CPS, by abstracting the timing requirements of the application away from the platform.
+% However, while the presented model is an exogenous coordination model and aims at designing structured networks, Ptides is endogenous and offers no structuring aspects in the language.
+%~\cite{Zhao2007, Zou2009} is interesting because of the DE concept to abstract the timing behaviour away from the hardware.
+% Ptides is no coordination language because there is no clear seperation between coordination and computation.
+% Ptides extends the Ptolemy II functionality by adding timing semantics but it is not at a new layer.
+% Prolemy II and Ptides language elements are used at the same level.
+
+%==============================================================================
+\section{Deadlocks and Permanent Blocking}
+\label{sect_related_dl}
+In this section I discuss research related to the analysis of deadlocks and permanent blocking presented in \Chap{\ref{chap_block}}.
+I will discuss methods already mentioned in the sections before but also mention approaches that are not related to already discussed related work.
+Neither of the methods discussed in the following make a distinction between deadlocks and permanent blocking but always use the term deadlock, in some cases in accordance with our definition but more often as a synonym for what we describe as permanent blocking.
+
+The work on interface theory, presented in \Sect{\ref{sect_related_interface}}, aims at checking the interoperability of components.
+The goal is to check whether a component is compatible with the environment it is placed in.
+In~\cite{larsen2006, larsen2007}, Larsen \etal relate mutual deadlock freeness of two components to whether they are violating each other's assumptions or not.
+However, in their work on an assembly theory~\cite{hennicker2015}, Hennicker and Knapp point out that neither \glspl{ia} nor \glspl{mioa} imply deadlock, thus an analysis of permanent blocking, as presented in \Chap{\ref{chap_block}}, is needed.
+Note that they use examples of lonely blockers and address them as deadlocks.
+Further note that because \glspl{mioa} are input-enabled, a component has to be able to cope with any input in any state.
+This delegates the handling of unexpected inputs to the component implementation and thus prevents permanent blocking at the interface as long as the implementation is correct.
+% Our approach avoids this by propagating additional information (the state tuple $\langle s_1, \dots, s_n \rangle$ and the set of subsystem identifiers $\mathit{Sys}(e)$) along the incremental composition and performing an analysis on the composed system.
+
+While interface theory is component centric and uses interface specification to check for compatibility of components, session types use a communication-centric approach and specify the protocol between components in order to check for compatibility.
+Bartoletti \etal present a survey on behavioural contracts in~\cite{bartoletti2015} where session types are related to \glspl{ia} and classified as a subset of \Glspl{ia}.
+Further, they define binary asymmetric compliance relations, amongst others, the notion of progress.
+Their definition differs from the one given in this dissertation in two points:
+Firstly, they require each subsystem to reach a success state where we consider any action as a contribution to progress.
+Secondly, they do not make a distinction between shared and open actions because they restrict the notion of progress to two participants.
+
+When it comes to \glspl{cps}, one often distinguishes between two types of tasks: simple tasks (\emph{S-task}) and complex tasks (\emph{C-task})~\cite{kopetz2011a}.
+An S-task has no synchronization point within while a C-task has one or multiple blocking synchronization points.
+An example of a streaming network composed purely out of S-tasks is the Ptolemy II project~\cite{lee2003}.
+Zhou and Lee present a statical deadlock analysis of such a streaming network in~\cite{zhou2006}.
+The approach is based on \emph{causality interfaces} where port to port dependencies are described as functions.
+A function $d(n)$ describes the output rate with the parameter $n$ describing the input rate.
+The approach is general in the sense that the multiplicity of each input-output relation is not static.
+Operators are used to compose the dependencies in order to form causality interfaces.
+To detect deadlocks, causality loops are identified and checked against a certain criteria.
+Given that the analysis is based on circular dependencies, the approach is suitable to identify deadlocks but not permanent blocking.
+
+% Apart from this, the main difference between their approaches in comparison to the method presented in \Chap{\ref{chap_sia}} is the underlying model.
+As described by Lee \etal in~\cite{lee2003}, the triggering semantics of Ptolemy II actors (an equivalent to processes as described in this dissertation) requires actors to have no synchronization point.
+This imposes more restrictions on the actor implementation than the model presented in this dissertation does on process implementations.
+Hence, their approach to detect deadlocks cannot simply be applied to my model.
+In order to apply their analysis to \glspl{pnsc}, each process in a \gls{pnsc} would have to be split into multiple Ptolemy II actors to eliminate blocking synchronization points within the processes.
+This is a difficult task because it would require to transform processes with persistent state into a system of stateless components.
+% While such an approach certainly has benefits (program structure, RT analysis, \dots) it imposes severe restrictions on the programmer and makes it hard to reuse legacy code.
+% Hence, Streamix does not follow this restrictive approach and allows blocking synchronization points within tasks (Streamix boxes are not restricted to S-tasks but also allow C-tasks).
+
+Kroening \etal present an approach to guarantee deadlock-freedom in C/Pthread programs by statically analysing the code~\cite{kroening2016}.
+As their analysis is tailored for a specific technology (C/Pthread) it is applied on a lower level of abstraction than the work presented in \Chap{\ref{chap_block}} which is not restricted to a particular programming language.
+Furthermore, the approach checks for cycles in a lock-graph and therefore focuses on deadlocks but not permanent blocking.
+
+A topic related to static detection of permanent blocking situations is preventing them out of construction due to inherent properties of the model.
+The coordination language \gls{bip}~\cite{basu2006} uses an underlying model~\cite{gossler2002} that avoids permanent blocking by construction:
+\Gls{bip} describes the behaviour of components with an automata-based model and composes components based on different synchronization protocols (\eg rendez-vous, broadcast).
+Freedom of permanent blocking is guaranteed with priority rules that allow to describe alternative actions, should an interaction be prevented from occurring.
+As a consequence, this means that priority rules have to be met by the implementation of the component and hence, handling of permanent blocking is delegated to the implementation.
+
+Another coordination language, offering freedom of deadlocks by construction, is S-Net~\cite{grelck2010}.
+\mbox{S-Net} uses binary operators to construct a streaming network from functional components, interlinked by \gls{fifo}-channels.
+Freedom of deadlocks is guaranteed due to the absence of feedback loops.
+Feedbacks are avoided by dynamically, potentially infinitely, replicating components and arranging them in a pipeline.
+S-Net is not completely free of permanent blocking because an implementation with finite buffer sizes can cause starvation, which is equivalent to what we call a lonely blocking situation.
+Later, feedback loops were introduced to S-Net~\cite{grelck2013}, for which to preserve the guarantee of deadlocks freedom they had to introduce the assumption of infinite buffer length on the feedback channel.
+
+\Gls{csp} is a process calculus introduced by Tony Hoare where atomic processes, which can be considered as labelled transition systems, communicate over a set of channels~\cite{hoare1978}.
+In his book, A. W. Roscoe~\cite{roscoe1997} presents a refined theory of \gls{csp} and discusses deadlocks in Chapter 13 where he proposes a number of design rules to avoid deadlocks.
+The proposed methods are all based on a local analysis, involving only a small collection of processes.
+He states that, ultimately, a state space exploration is required to decide on global deadlock-freedom which corresponds to the approach taken in this thesis by using the underlying model described in \Chap{\ref{chap_block}}.
+
+A method that is often used in industry is the so-called \emph{Ostrich Algorithm} as mentioned by Tanenbaum and Bos~\cite{tanenbaum2014}.
+The rationale behind this is that permanent blocking is happening so rarely that it is not worth the price to invest resources to handle such cases.
+However, ignoring the potential problem is not a suitable solution for critical systems which are addressed by the work presented in this dissertation.

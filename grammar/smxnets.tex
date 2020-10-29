@@ -1,0 +1,29 @@
+\setlength{\grammarindent}{10em} % increase separation between LHS/RHS 
+\begin{grammar}
+    <program> $\Rightarrow$ <net\_decls> \lit{connect} <net>
+
+    <net\_decls> $\Rightarrow$ \Regex{[} <net\_decl> \Regex{]*}
+
+    <net\_decl> $\Rightarrow$ <box\_assign>
+    \alt <net\_assign>
+    \alt <net\_proto>
+    \alt <wrap\_decl>
+
+    <net\_proto> $\Rightarrow$ \lit{net} <net\_name> \lit{(} <net\_port\_list> \lit{)}
+
+    <net\_port\_list> $\Rightarrow$ <net\_port\_decl> \Regex{[} \lit{,} <net\_port\_decl> \Regex{]*}
+
+    <net\_port\_decl> $\Rightarrow$ <port\_collection> <port\_mode> <port\_name>
+
+    <port\_collection> $\Rightarrow$ \lit{left}
+    \alt \lit{right}
+    \alt \lit{side}
+
+    <port\_mode> $\Rightarrow$ \lit{in}
+    \alt \lit{out}
+
+    <net\_name> $\Rightarrow$ identifier
+
+    <port\_name> $\Rightarrow$ identifier
+\end{grammar}
+

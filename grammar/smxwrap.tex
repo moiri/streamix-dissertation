@@ -1,0 +1,27 @@
+\setlength{\grammarindent}{9.6em} % increase separation between LHS/RHS 
+\begin{grammar}
+    <wrap\_decl> $\Rightarrow$ \lit{wrapper} <wrap\_name> \lit{(} <wrap\_port\_list> \lit{)} \lit{\{} <program> \lit{\}} \newline
+    \lit{net} \lit{(} <net\_port\_list> \lit{)}
+
+    <wrap\_port\_list> $\Rightarrow$ <wrap\_port\_decl> \Regex{[} \lit{,} <wrap\_port\_decl> \Regex{]*}
+
+    <wrap\_port\_decl> $\Rightarrow$ \Regex{[} <port\_collection> \Regex{]} <port\_mode> <port\_name> \newline
+    \Regex{[} \lit{(} <alt\_port\_list> \lit{)} \Regex{]}
+    % \alt \lit{(} <alt\_port\_list> \lit{)}
+
+    <alt\_port\_list> $\Rightarrow$ <port\_name> \Regex{[} \lit{,} <port\_name> \Regex{]*}
+
+    <program> $\Rightarrow$ <net\_decls> \lit{connect} <net>
+
+    <port\_collection> $\Rightarrow$ \lit{left}
+    \alt \lit{right}
+    \alt \lit{side}
+
+    <port\_mode> $\Rightarrow$ \lit{in}
+    \alt \lit{out}
+
+    <port\_name> $\Rightarrow$ identifier
+
+    <wrap\_name> $\Rightarrow$ identifier
+\end{grammar}
+

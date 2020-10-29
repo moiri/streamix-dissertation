@@ -1,0 +1,8 @@
+digraph SM {
+    graph[rankdir="LR"];
+    node[shape="circle", fixedsize="true", style="very thick"];
+    edge[style="very thick"];
+    WI -> RL -> RN -> WO;
+    WO -> WI;
+    RN -> RL;
+}

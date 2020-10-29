@@ -1,0 +1,72 @@
+%% Creator: Inkscape inkscape 0.48.5, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'mirt.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{330.0764bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.63059142)%
+    \put(0,0){\includegraphics[width=\unitlength]{mirt.pdf}}%
+    \put(0.67921245,0.53367523){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{message write}}}%
+    \put(0.67921245,0.41249117){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{message overwrite}}}%
+    \put(0.67921245,0.2913071){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{message release}}}%
+    \put(0.67921245,0.18224144){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$t_{now}$}}}%
+    \put(0.67921245,0.06105738){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$t_{nr}$}}}%
+    \put(0.00058168,0.58214886){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{a)}}}%
+    \put(0.00058168,0.46096479){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{a')}}}%
+    \put(0.00058168,0.33978073){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{b)}}}%
+    \put(0.00058168,0.21859666){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{b')}}}%
+    \put(0.00058168,0.0974126){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{b'')}}}%
+    \put(0.46108113,0.48520161){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{t}}}%
+    \put(0.46108113,0.36401754){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{t}}}%
+    \put(0.46108113,0.24283348){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{t}}}%
+    \put(0.46108113,0.12164941){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{t}}}%
+    \put(0.46108113,0.00046535){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{t}}}%
+    \put(0.18235778,0.23071507){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\footnotesize $m_3$}}}%
+    \put(0.10964734,0.59426727){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\footnotesize $m_1$}}}%
+    \put(0.14600256,0.35189914){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\footnotesize $m_2$}}}%
+  \end{picture}%
+\endgroup%

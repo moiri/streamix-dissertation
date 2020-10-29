@@ -1,0 +1,14 @@
+gen_tikz.aux
+gen_tikz.bbl
+gen_tikz.blg
+gen_tikz.fdb_latexmk
+gen_tikz.fls
+gen_tikz.glo
+gen_tikz.ist
+gen_tikz.log
+gen_tikz.pdf
+gen_tikz.auxlock
+*.swp
+*.dpth
+*.log
+*.md5

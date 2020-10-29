@@ -1,0 +1,214 @@
+%% ----------------------------------------------------------------
+%% thesis.tex -- MAIN FILE (the one that you compile with LaTeX)
+%% ---------------------------------------------------------------- 
+
+% Set up the document
+\documentclass[a4paper, 11pt, oneside]{thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
+
+\makeglossaries
+\loadglsentries{glossary}
+
+%% ----------------------------------------------------------------
+\begin{document}
+
+\frontmatter      % Begin Roman style (i, ii, iii, iv...) page numbering
+
+% Set up the Title Page
+\title  {Analysis and Coordination of Mixed-criticality Cyber-physical Systems}
+\authors  {\texorpdfstring
+            {\href{simon.maurer@protonmail.ch}{Simon Maurer}}
+            {Simon Maurer}
+            }
+\addresses  {\groupname\\\deptname\\\univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
+\date       {\today}
+\subject    {}
+\keywords   {}
+
+\maketitle
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % It is better to have smaller font and larger line spacing than the other way round
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{}  % Clears all page headers and footers
+\rhead{\thepage}  % Sets the right side header to show the page number
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+\addcontentsline{toc}{chapter}{Preface}
+\cleardoublepage  % End of the Abstract
+% %% ----------------------------------------------------------------
+% % Declaration Page required for the Thesis, your institution may give you a different text to place here
+% \addcontentsline{toc}{section}{Declaration of Authorship}
+% \Declaration{
+%     I, Simon Maurer, declare that this thesis titled, `Coordination of Mixed-criticality Cyber-physical Systems' and the work presented in it are my own. I confirm that:
+
+%     \begin{itemize}
+%         \item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
+%         \item[\tiny{$\blacksquare$}] Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+%         \item[\tiny{$\blacksquare$}] Where I have consulted the published work of others, this is always clearly attributed.
+%         \item[\tiny{$\blacksquare$}] Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+%         \item[\tiny{$\blacksquare$}] I have acknowledged all main sources of help.
+%         \item[\tiny{$\blacksquare$}] Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
+%     \end{itemize}
+
+%     Signed:\\
+%     \rule[1em]{25em}{0.5pt}  % This prints a line for the signature
+
+%     Date:\\
+%     \rule[1em]{25em}{0.5pt}  % This prints a line to write the date
+% }
+% \clearpage  % Declaration ended, now start a new page
+
+%% ----------------------------------------------------------------
+
+% The Abstract Page
+% \addcontentsline{toc}{section}{Abstract}
+\addtotoc{Abstract}
+\abstract{
+    A \gls{cps} can be described as a network of interlinked, concurrent computational components that interact with the physical world.
+    Such a system is usually of reactive nature and must satisfy strict timing requirements to guarantee a correct behaviour.
+    The components can be of mixed-criticality which implies different progress models and communication models, depending whether the focus of a component lies on predictability or resource efficiency.
+
+    In this dissertation I present a novel approach that bridges the gap between stream processing models and \glspl{lts}.
+    The former offer powerful tools to describe concurrent systems of, usually simple, components while the latter allow to describe complex, reactive, components and their mutual interaction.
+    In order to achieve the bridge between the two domains I introduce the novel \gls{lts} \emph{\gls{sia}} that allows to model the interaction protocol of a process via its interface and to incrementally compose simple processes into more complex ones while preserving the system properties.
+    Exploiting these properties I introduce an analysis to identify permanent blocking situations in a network of composed processes.
+    \Glspl{sia} are wrapped by the novel component-based coordination model \emph{\gls{pnsc}} that allows to describe a network of concurrent processes where multiple communication models and the co-existence and interaction of heterogeneous processes is supported due to well defined interfaces.
+
+    The work presented in this dissertation follows a holistic approach which spans from the theory of the underlying model to an instantiation of the model as a novel coordination language, called \emph{\gls*{smx}}.
+    The language uses network operators to compose networks of concurrent processes in a structured and hierarchical way.
+    The work is validated by a prototype implementation of a compiler and a \gls{rts} that allows to compile a \gls*{smx} program and execute it on a platform with support for ISO C, POSIX threads, and a Linux operating system.
+}
+\cleardoublepage  % End of the Abstract
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+% The Acknowledgements page, for thanking everyone
+% \addcontentsline{toc}{section}{Acknowledgements}
+\addtotoc{Acknowledgements}
+\acknowledgements{
+    First, my gratitude goes to the University of Hertfordshire for providing the funding and infrastructure for my PhD and for giving me the opportunity to start a career in academia.
+
+    I would like to thank my primary supervisor and research mentor Dr~Raimund Kirner for the support of my PhD and related research.
+    I am grateful for his commitment to provide me with guidance even late at night or on weekends.
+    His broad knowledge and his patience were a huge help throughout the whole of the PhD.
+
+    Further, I would like to express my gratitude to Dr~Olga Tveretina, my secondary supervisor, for her valuable inputs and her mental support.
+    My thanks also go to Dr~Prof~Alex Shafarenko, leader of the research group \groupname, for his invaluable feedback.
+
+    I thank Giovina for her patience and her interest in abstract topics that are not hers.
+    Her cheerful and supportive attitude were a big help throughout this project and I am ever grateful to her for leading me onto this path.
+    Her hilarious personifications of certain aspects of my work, complete with pictures and all, is only one of many examples of her brilliant way of supporting me.
+
+    Although I do not know these people personally I want to give a shout out to Randall Munroe for his book "Thing Exaplainer - Complicated Stuff in Simple Words", showing that complicated things can be explained with only a 1000 words and Linda Liukas, for her book "Hello Ruby", advocating the fact that computer science is not as difficult as common belief suggests and that it can be taught to anyone.
+
+    Last but not least, I want to thank my family and friends from abroad for their continuous support and their willingness to pay us visit on a regular basis.
+    % I cannot stress enough how much I appreciated 
+}
+\cleardoublepage  % End of the Acknowledgement
+%% ----------------------------------------------------------------
+
+\pagestyle{fancy}  %The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+\setstretch{1.0}  % It is better to have smaller font and larger line spacing than the other way round
+%% ----------------------------------------------------------------
+\lhead{\emph{Contents}}  % Set the left side page header to "Contents"
+% \addcontentsline{toc}{section}{Contents}
+\addtotoc{Contents}
+\tableofcontents  % Write out the Table of Contents
+\cleardoublepage  % End of the Content
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Figures}}  % Set the left side page header to "List if Figures"
+% \addcontentsline{toc}{section}{List of Figures}
+\addtotoc{List of Figures}
+\listoffigures  % Write out the List of Figures
+\cleardoublepage  % End of the Figures
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Definitions}}  % Set the left side page header to "List of Tables"
+\renewcommand{\listtheoremname}{List of Definitions}
+% \addcontentsline{toc}{section}{\listtheoremname}
+\addtotoc{\listtheoremname}
+% \listoftheorems[ignoreall,show=definition]  % Write out the List of Definitions
+\listoftheorems  % Write out the List of Definitions
+\cleardoublepage  % End of the Definitions
+
+%% ----------------------------------------------------------------
+\lhead{\emph{Acronyms}}  % Set the left side page header to "Abbreviations"
+% \addcontentsline{toc}{section}{Acronyms}
+\addtotoc{Acronyms}
+\printacronyms
+\cleardoublepage  % End of the Acronyms
+
+% End of the pre-able, contents and lists of things
+% Begin the Dedication page
+
+\setstretch{1.3}  % Return the line spacing back to 1.3
+
+\addtocontents{toc}{\vspace{3em}}  % Add a gap in the Contents, for aesthetics
+
+%% ----------------------------------------------------------------
+\mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
+\pagestyle{fancy}  % Return the page headers back to the "fancy" style
+\lhead{\emph{\leftmark}}  % Clears the left side page header
+
+% Include the chapters of the thesis, as separate files
+% Just uncomment the lines as you write the chapters
+
+\glsresetall
+\input{chapters/introduction} % Introduction
+
+\glsresetall
+\input{chapters/background} % Background Theory
+
+\glsresetall
+\input{chapters/ecm} % Process Networks with synchronous Communication
+
+\glsresetall
+\input{chapters/tcm} % Time-based Component Model
+
+\glsresetall
+\input{chapters/block} % Permanent blocking analysis
+
+\glsresetall
+\input{chapters/streamix} % Streamix, our coordination langue
+
+\glsresetall
+\input{chapters/rts} % runtime system
+
+\glsresetall
+\input{chapters/related} % Related work
+
+\glsresetall
+\input{chapters/conclusion} % Conclusion
+
+%% ----------------------------------------------------------------
+% Now begin the Appendices, including them as separate files
+
+% \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+% \appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+
+% \input{appendices/appendixA}	% Appendix Title
+
+%\input{appendices/appendixB} % Appendix Title
+
+%\input{appendices/appendixC} % Appendix Title
+
+\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+\backmatter
+
+% \printglossary
+
+%% ----------------------------------------------------------------
+% \label{Bibliography}
+\lhead{\emph{Bibliography}}  % Change the left side page header to "Bibliography"
+\bibliographystyle{unsrtnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+\bibliography{bibliography}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+\addcontentsline{toc}{chapter}{\bibname}
+
+\end{document}  % The End
+%% ----------------------------------------------------------------
